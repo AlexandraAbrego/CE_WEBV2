@@ -11,7 +11,7 @@ const SidebarElements = ({ iconName, TitleName, navName }) => {
     >
        
         <span className="material-symbols-rounded">{iconName}</span>
-        <p > {TitleName} </p>
+        <p className="titles-sidebar" style={{fontWeight:'600', fontSize:'1.2rem'}} > {TitleName} </p>
     </NavLink>
   )
 }
