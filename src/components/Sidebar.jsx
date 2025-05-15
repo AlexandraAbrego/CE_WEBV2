@@ -1,6 +1,6 @@
 import SidebarElements from "./SidebarElements"
 import { useAuth } from "../context/AuthContext";
-
+import { sideBarContent } from "../temp/tabledata";
 
 export const Sidebar = () => {
     const { role } = useAuth();
@@ -16,28 +16,15 @@ export const Sidebar = () => {
             </div>
             <div className="elementosSideBar">
                 <SidebarElements iconName={'Home'} TitleName={'Inicio'} navName={"/home"} />
-                {role === 'directivos' && (
-                    <>
-                        <SidebarElements iconName="child_care" TitleName="Alumnos" navName="/alumnos" />
-                        <SidebarElements iconName="group" TitleName="Plantilla" navName="/plantilla" />
-                        <SidebarElements iconName="storefront" TitleName="Proveedores" navName="/proveedores" />
-                        <SidebarElements iconName="calendar_month" TitleName="Eventos" navName="/eventos" />
-                        <SidebarElements iconName="description" TitleName="Documentos" navName="/documentos" />
-                        <SidebarElements iconName="payments" TitleName="Balance" navName="/balance" />
-                        <SidebarElements iconName="group_add" TitleName="Usuarios" navName="/usuarios" />
+                {sideBarContent[role].map((item, index) => (
+                    <SidebarElements
+                        key={index}
+                        iconName={item.icon}
+                        TitleName={item.title}
+                        navName={item.navname}
+                    />
+                ))}
 
-                    </>
-                )}
-                {role === 'padres_familia' && (
-                    <>
-                        <SidebarElements iconName="key" TitleName="Acceso" navName="/acceso" />
-                        <SidebarElements iconName="camera_video" TitleName="Monitoreo" navName="/monitoreo" />
-                        <SidebarElements iconName="payments" TitleName="Pagos" navName="/pagos" />
-                        <SidebarElements iconName="description" TitleName="Permisos" navName="/permisos" />
-
-
-                    </>
-                )}
                 <hr />
                 <SidebarElements iconName="person" TitleName="Perfil" navName="/perfil" />
                 <SidebarElements iconName="settings" TitleName="Ajustes" navName="/ajustes" />

@@ -1,52 +1,62 @@
 import { Layout } from '../../components/Layout'
+import { useState } from 'react';
 import CustomButton from '../../components/CustomButton'
-import SearchBar from '../../components/SearchBar'
 import InfoTexts from '../../components/InfoTexts'
 import Tables from '../../components/Tables'
+import DivContainer from '../../components/divContainer'
+import { studentActions, tabs, tabledata, studentsInscripciones, studentSections } from '../../temp/tabledata'
 
 export const Alumnos = () => {
+  const [activeSection, setActiveSection] = useState(null);
+
   return (
     <Layout>
       <div className='divStudents'>
-        <div className='leftStudents'>
-          <p className='transparentButton'>Accesos Rápidos</p>
+        <div className='leftStudents btn btn-primary'>
+          <p className='transparentButton' onClick={() => setActiveSection(null)}  style={{cursor:'pointer'}}>Accesos Rápidos</p>
         </div>
         <div className='rightStudents'>
           <div className='rowAR'>
-            <div className='columnAR' >
-              <CustomButton widthC='95%' title={'Preinscripciones'}></CustomButton>
-              <CustomButton widthC='95%' title={'Inscripciones'}></CustomButton>
-              <CustomButton widthC='95%' title={'Baja Temporal'}></CustomButton>
-            </div>
-            <div className='columnAR' >
-              <CustomButton widthC='95%' title={'Cambio de Grupo'}></CustomButton>
-              <CustomButton widthC='95%' title={'Expediente del alumno'}></CustomButton>
-              <CustomButton widthC='95%' title={'Baja definitiva'}></CustomButton>
-            </div>
+            {[0, 1].map(col => (
+              <div className='columnAR' key={col}>
+                {studentActions
+                  .slice(col * 3, col * 3 + 3)
+                  .map((title, index) => (
+                    <CustomButton key={index} widthC='95%' title={title} onClick={() => setActiveSection(title)} />
+                  ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className='divBackground'>
-        <div className='divColumns' style={{ justifyContent: 'space-between' }}>
-          <h2>Alumnos Actuales</h2>
-          <SearchBar />
-        </div>
-        <div>
-          <InfoTexts iconName={'info'} text={'Haga click en el nombre del alumno para visualizar su expediente'}></InfoTexts>
-          <Tables></Tables>
-        </div>
+      {activeSection ? (
+        <>
 
-      </div>
+          {studentSections[activeSection] || (
+            <DivContainer titleC="Error">
+              <p>Sección no encontrada</p>
+            </DivContainer>
+          )}
+        </>
+      ) : (
+        <>
+          <DivContainer titleC="Alumnos Actuales" showSearchBar={false}>
+            <InfoTexts
+              iconName="info"
+              text="Haga click en el nombre del alumno para visualizar su expediente"
+            />
+            <Tables tabs={tabs} tabledata={tabledata} />
+          </DivContainer>
 
-      <div className='divBackground'>
-        <div className='divColumns' style={{ justifyContent: 'space-between' }}>
-          <h2>Registro de Inscripciones</h2>
-          <SearchBar />
-        </div>
-        <div>
-        </div>
-      </div>
+          <DivContainer titleC="Inscripciones Recientes" showButton={true} titleB="Inscribir Nuevo Alumno">
+            <Tables tabs={tabs} tabledata={studentsInscripciones} />
+          </DivContainer>
+        </>
+      )}
+
+    
+
     </Layout>
   )
 }

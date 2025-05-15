@@ -1,13 +1,13 @@
-export const NotificationsBarElements = ({ iconName }) => {
+export const NotificationsBarElements = ({ iconName, userName, info }) => {
   return (
     <div className="notBarElement">
       <img className='iconNotBar' src={iconName} />
       <div className="notBarTextInfo">
         <div className="notBarName">
-            <p> <small>Usuario</small></p>
+          <p> <small>{userName}</small></p>
         </div>
         <div className="notBarNotification">
-          <p><small> Notificación</small></p>
+          <p><small> {info}</small></p>
 
         </div>
       </div>

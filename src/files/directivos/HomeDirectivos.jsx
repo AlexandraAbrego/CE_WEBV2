@@ -3,7 +3,7 @@ import Checker from "../../components/Checker"
 import CustomInput from "../../components/CustomInput"
 import EventPreview from "../../components/EventPreview"
 import CustomButton from "../../components/CustomButton";
-
+import { eventList } from "../../temp/tabledata";
 export const HomeDirectivos = () => {
   return (
     <>
@@ -15,11 +15,13 @@ export const HomeDirectivos = () => {
           <div className="divColumn">
             <h2 >Próximos Eventos</h2>
             <div style={{ marginTop: '2rem' }}>
-              <EventPreview colorT={'#e5254b'} title={'Junta Padres de Familia'}></EventPreview>
-              <EventPreview colorT={'#ea7000'} title={'Junta de Consejo Técnico'}></EventPreview>
-              <EventPreview colorT={'#038100'} title={'Reunión Programada'}></EventPreview>
-              <EventPreview colorT={'#174ea6'} title={'Reunión con Proveedores'}></EventPreview>
-              <EventPreview colorT={'#ffc30f'} title={'Firma de Boletas'}></EventPreview>
+              {eventList.map((event, index) => (
+                <EventPreview
+                  key={index}
+                  colorT={event.colorT}
+                  title={event.title}
+                />
+              ))}
               <button className="buttonLinked" > <small>Ver más</small></button>
             </div>
 
@@ -51,7 +53,7 @@ export const HomeDirectivos = () => {
             <Checker option={"Padres de Familia"}></Checker>
             <Checker option={"Docentes"}></Checker>
             <Checker option={"Administradores"}></Checker>
-            <br/>
+            <br />
             <CustomButton title='Agendar Evento'  ></CustomButton>
 
           </div>
@@ -62,7 +64,7 @@ export const HomeDirectivos = () => {
             <Checker inputType="fecha"> </Checker>
           </div>
         </div>
-        
+
 
 
 
